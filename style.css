@@ -1,0 +1,15 @@
+#countries{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+.country-class{
+    width: 200px;
+    text-align: center;
+    border: 2px solid goldenrod;
+    border-radius: 10px;
+    padding-bottom: 20px;
+}
+#countryDetails img{
+    width: 200px;
+}

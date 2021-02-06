@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countries Api</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="countryDetails">
+        
+    </div>
+    <div id="countries">
+
+    </div>
+
+    <script>
+        fetch('https://restcountries.eu/rest/v2/all')
+            .then(res => res.json())
+            .then(data => {
+                displayData(data);
+            })
+
+        const displayData = (data) => {
+            console.log(data);
+            const countries = document.getElementById('countries');
+            data.forEach(country => {
+                const countryDiv = document.createElement('div');
+                const countryInfo = `
+                    <h3 class ="country-name"> ${country.name} </h3>
+                    <h5> ${country.capital} </h5>
+                    <button onclick="seeDetails('${country.name}')">Details</button>
+                `;
+
+                countryDiv.innerHTML = countryInfo;
+                countryDiv.className = 'country-class'
+
+                countries.appendChild(countryDiv);
+            });
+
+            /* for (let i = 0; i < data.length; i++) {
+                 const country = data[i];
+
+                 const countryDiv = document.createElement('div');
+
+                 // const h3 = document.createElement('h3');
+                 // h3.innerText = country.name;
+
+                 // const p = document.createElement('p');
+                 // p.innerText = country.capital;
+
+                 // countryDiv.appendChild(h3);
+                 // countryDiv.appendChild(p);
+
+                 // countries.appendChild(countryDiv);
+
+                 const countryInfo = `
+                     <h3 class ="country-name"> ${country.name} </h3>
+                     <h5> ${country.capital} </h5>
+                 `;
+
+                 countryDiv.innerHTML = countryInfo;
+                 countryDiv.className = 'country-class'
+
+                 countries.appendChild(countryDiv);
+             }*/
+
+        };
+
+        const seeDetails = (name) => {
+            console.log(name);
+            const url = `https://restcountries.eu/rest/v2/name/${name}`;
+            console.log(url);
+            fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                // console.log(`country full data as an array : ${data}`);
+                // console.log(data);
+                // console.log(`country first array element : ${data[0]}`);
+                // console.log(`Country Name is : ${data[0].name}`);
+                renderCountryInfo(data[0]);
+            })
+        }
+
+
+        const renderCountryInfo = (countryInfo) =>{
+            console.log(countryInfo);
+            const countryDetails =  document.getElementById('countryDetails');
+            countryDetails.innerHTML = `
+                <h3> Country Name:  ${countryInfo.name} </h3>
+                <p> Country Population:  ${countryInfo.population} </p>
+                <img src="${countryInfo.flag}" alt="">
+            `;
+        }
+    </script>
+</body>
+
+</html>
